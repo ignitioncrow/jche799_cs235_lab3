@@ -48,18 +48,18 @@ def test_illegal_move(robot):
 
     with pytest.raises(IllegalMoveException):
         robot.move()
-def test_illegal_move2(robot):
+def test_illegal_move_west(robot):
     robot.turn()
     robot.turn()
     robot.turn()
     with pytest.raises(IllegalMoveException):
         robot.move()
-def test_illegal_move3(robot):
+def test_illegal_move_east(robot):
     robot.turn()
     with pytest.raises(IllegalMoveException):
         for i in range(1,11):
             robot.move()
-def test_illegal_move4(robot):
+def test_illegal_move_north(robot):
     with pytest.raises(IllegalMoveException):
         for i in range(1,11):
             robot.move()
@@ -121,22 +121,20 @@ def test_back_track_after_multiple_moves(robot):
     robot.move()
     robot.move()
     robot.move()
+    robot.turn()
     robot.back_track()
     state = robot.state()
     assert state['direction'] == Direction.NORTH
-    assert state['row'] == 8
+    assert state['row'] == 7
     assert state['col'] == 1
 def test_back_track_after_every_multiple_move(robot):
-    row1 = 7
-    col1 = 1
-    for i in range(1,5):
+    for i in range(5):
         robot.move()
-    for i in range(1,5):
+    for i in range(5):
         robot.back_track()
-        state = robot.state()
-        row1 += 1
-        assert state['direction'] == Direction.NORTH
-        assert state['row'] == row1-1
-        assert state['col'] == col1
+    state = robot.state()
+    assert state['direction'] == Direction.NORTH
+    assert state['row'] == 10
+    assert state['col'] == 1
 
 
